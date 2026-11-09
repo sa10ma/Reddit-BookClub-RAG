@@ -52,6 +52,9 @@ class TextRetriever:
     # -------------------------------------------------------------------
     # 2. BM25 Scoring Function
     # -------------------------------------------------------------------
+
+    #if i remember correctly, bm25 had some parameters like k1 and b that can be tuned for better performance. 
+
     def bm25_scores(self, query):
         """Computes BM25 lexical scores across the corpus."""
         q_tokens = tokenize(query)

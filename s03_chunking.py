@@ -39,7 +39,7 @@ def extract_people_entities(text):
 
 
 # -------------------------------------------------------------------
-# Strategy 1: Word-Based Fixed Size Chunker (Your Custom Function)
+# Strategy 1: Word-Based Fixed Size Chunker 
 # -------------------------------------------------------------------
 def chunk_fixed(text, chunk_size=50, overlap=10):
     """
@@ -69,38 +69,6 @@ def chunk_fixed(text, chunk_size=50, overlap=10):
 # -------------------------------------------------------------------
 # Strategy 2: Hybrid Sentence Chunker with Word Caps & Sentence Overlap (Fixed)
 # -------------------------------------------------------------------
-# def chunk_sentences_with_overlap(text, max_words=50, overlap_sentences=1):
-#     """
-#     Splits text into sentence groups up to a max word limit, 
-#     maintaining a sentence-level overlap buffer across chunks.
-#     """
-#     sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", text) if s.strip()]
-#     if not sentences:
-#         return [text] if text.strip() else []
-        
-#     chunks = []
-#     i = 0
-    
-#     while i < len(sentences):
-#         current = []
-#         words_count = 0
-#         j = i
-        
-#         while j < len(sentences):
-#             sentence_words = len(sentences[j].split())
-#             if current and (words_count + sentence_words > max_words):
-#                 break
-#             current.append(sentences[j])
-#             words_count += sentence_words
-#             j += 1
-            
-#         chunks.append(" ".join(current))
-        
-#         sentences_added = len(current)
-#         advance = max(1, sentences_added - overlap_sentences)
-#         i += advance
-        
-#     return chunks
 def chunk_sentences_with_overlap(text, max_words=300, overlap_sentences=1):
     """
     Splits text into sentence groups up to a max word limit, 
@@ -148,8 +116,10 @@ def chunk_sentences_with_overlap(text, max_words=300, overlap_sentences=1):
         # Calculate next start index using overlap, ensuring we always move forward at least 1 step
         advance = max(1, len(current) - overlap_sentences)
         i += min(advance, len(current)) # Prevent getting stuck
-        
+    
     return chunks
+
+
 # -------------------------------------------------------------------
 # Main Pipeline Function with Optional NER
 # -------------------------------------------------------------------
@@ -171,7 +141,6 @@ def create_chunks(strategy="fixed", chunk_size=50, overlap=10, max_words=50, ove
         if not text:
             continue
 
-        # Support both the newer data schema (chapter/type) and older raw JSON files
         doc_id = doc.get("id", f"doc_{chunk_counter}")
         chapter = doc.get("chapter", "Unknown Chapter")
         doc_type = doc.get("type", "unknown")
