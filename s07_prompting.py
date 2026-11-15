@@ -84,6 +84,7 @@ def ask_llm(prompt):
     )
     return response.choices[0].message.content
 
+from s06_retrieve_context import LiteraturePipelineRetriever
 
 def answer_question(question, top_k=3, alpha=0.9):
     """
@@ -98,7 +99,7 @@ def answer_question(question, top_k=3, alpha=0.9):
     if not chunks:
         return "The provided sources do not contain enough information to answer this question.", []
         
-    context_text = format_context(chunks)
+    context_text = LiteraturePipelineRetriever.build_context(chunks)
     prompt = build_strict_prompt(question, context_text)
     
     llm_response = ask_llm(prompt)

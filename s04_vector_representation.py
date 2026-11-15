@@ -18,7 +18,7 @@ class TextRetriever:
     Encapsulates TF-IDF, BM25, MiniLM Embeddings, and Hybrid Retrieval 
     over a given corpus of documents/chunks.
     """
-    def __init__(self, corpus_texts, embedding_model_name="all-MiniLM-L6-v2"):
+    def __init__(self, corpus_texts, embedding_model_name="all-MiniLM-L6-v2", bm25_k1=1.5, bm25_b=0.75):
         self.corpus_texts = corpus_texts
         
         # 1. Initialize TF-IDF
@@ -30,7 +30,7 @@ class TextRetriever:
         print("Initializing BM25 index...")
         tokenized_corpus = [tokenize(doc) for doc in self.corpus_texts]
         #initializer takes b and k1 
-        self.bm25_index = BM25Okapi(tokenized_corpus)
+        self.bm25_index = BM25Okapi(tokenized_corpus, k1=bm25_k1, b=bm25_b)
         
         # 3. Initialize Sentence Transformer (MiniLM)
         print(f"Loading embedding model ({embedding_model_name})...")
@@ -38,7 +38,8 @@ class TextRetriever:
         # Pre-encode corpus normalized for fast cosine similarity matching
         self.emb_matrix = self.embedding_model.encode(
             self.corpus_texts, 
-            normalize_embeddings=True, 
+            normalize_embeddings=True, #so that in cosine similarity, 
+            #we can just do dot product w/o dividing by length since length is 1
             show_progress_bar=False
         )
 

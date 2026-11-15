@@ -123,6 +123,7 @@ def chunk_sentences_with_overlap(text, max_words=300, overlap_sentences=1):
 # -------------------------------------------------------------------
 # Main Pipeline Function with Optional NER
 # -------------------------------------------------------------------
+#chunking: in og data, each summary/analysis is doc, each paragraph is parent to sentence overlapped chunks
 def create_chunks(strategy="sentence", chunk_size=50, overlap=10, max_words=50, overlap_sentences=1, extract_ner=False):
     """
     Loads preprocessed documents, splits them into chunks, and optionally 
