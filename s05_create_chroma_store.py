@@ -14,7 +14,7 @@ def populate_chroma_store(
     collection_name="bluest_eye_rag", 
     strategy="sentence", 
     chunk_size=60, #for when staregy is "fixed"
-    max_words=60, #for when strategy is "sentence"
+    max_words=70, #for when strategy is "sentence"
     overlap=15, 
     overlap_sentences = 1,
     extract_ner=True,
@@ -91,5 +91,13 @@ def populate_chroma_store(
 
 if __name__ == "__main__":
     # Test populating the database
-    col = populate_chroma_store(strategy="fixed", chunk_size=60, overlap=15, extract_ner=True)
+    col = populate_chroma_store(collection_name="bluest_eye_rag",
+                                db_path="./chroma_db",
+                                strategy="sentence", 
+                                chunk_size=60, 
+                                overlap=15, 
+                                max_words=70,
+                                overlap_sentences=1,
+                                reset_db=True,
+                                extract_ner=True)
     print(f"Total items in collection: {col.count()}")

@@ -29,6 +29,7 @@ class TextRetriever:
         # 2. Initialize BM25
         print("Initializing BM25 index...")
         tokenized_corpus = [tokenize(doc) for doc in self.corpus_texts]
+        #initializer takes b and k1 
         self.bm25_index = BM25Okapi(tokenized_corpus)
         
         # 3. Initialize Sentence Transformer (MiniLM)
