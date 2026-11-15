@@ -2,12 +2,12 @@
 import json
 import os
 
-def load_documents():
+def load_documents(file_path="data/sparknotes_bluesteye.json"):
     """
     Loads raw SparkNotes literature documents from the local data folder.
     Returns a list of document dictionaries.
     """
-    file_path = "data/sparknotes_bluesteye.json"
+    file_path = file_path
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"Could not find {file_path}. Run scrape_books.py first!")
         

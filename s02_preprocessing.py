@@ -120,16 +120,35 @@ def preprocess_text(text,
     return text
 
 
-def preprocess_documents():
+def preprocess_documents(
+                        file_path="data/sparknotes_bluesteye.json", 
+                        lowercase=False, 
+                        remove_url=True, 
+                        remove_punct=False, 
+                        remove_num=False, 
+                        normalize_space=True, 
+                        remove_stop_words=False, 
+                        preserve_negation=True, 
+                        use_stemming=False, 
+                        use_lemmatization=False):
     """
     Loads raw SparkNotes documents, applies text cleaning while preserving 
     chapter and type metadata, and returns the preprocessed document list.
     """
-    raw_docs = load_documents()
+    raw_docs = load_documents(file_path=file_path)
     processed_docs = []
     
     for doc in raw_docs:
-        cleaned_text = preprocess_text(doc["text"])
+        cleaned_text = preprocess_text(text=doc["text"], 
+                                       lowercase=False, 
+                                       remove_url=True, 
+                                       remove_punct=False, 
+                                       remove_num=False, 
+                                       normalize_space=True, 
+                                       remove_stop_words=False, 
+                                       preserve_negation=True, 
+                                       use_stemming=False, 
+                                       use_lemmatization=False)
         
         # Keep documents that retain meaningful text after cleaning
         if len(cleaned_text) > 20:
