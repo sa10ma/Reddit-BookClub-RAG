@@ -109,3 +109,6 @@ if __name__ == "__main__":
     print("BM25 Scores:  ", retriever.bm25_scores(test_query).round(3))
     print("Embedding Scores:", retriever.embedding_scores(test_query).round(3))
     print("Hybrid Scores (alpha=0.9):", retriever.hybrid_scores(test_query, alpha=0.9).round(3))
+
+    #The hybrid score is normalized relative to the documents returned for that particular query,
+    # whereas the embedding score is a raw cosine similarity.

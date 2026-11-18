@@ -98,8 +98,18 @@ def answer_question(question, top_k=3, alpha=0.9):
     
     if not chunks:
         return "The provided sources do not contain enough information to answer this question.", []
+
+
+    context_builder = LiteraturePipelineRetriever()
+
+    context_text = context_builder.build_context(
+        retrieved_chunks=chunks,
+        max_context_chunks=3,
+        word_budget=500
+    )["context_text"]
         
-    context_text = LiteraturePipelineRetriever.build_context(chunks)
+    #context_text = LiteraturePipelineRetriever.build_context(retrieved_chunks=chunks, max_context_chunks=3, word_budget=500)["context_text"]
+    print("Context Text:", context_text)
     prompt = build_strict_prompt(question, context_text)
     
     llm_response = ask_llm(prompt)
